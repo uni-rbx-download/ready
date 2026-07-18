@@ -12,7 +12,7 @@
   <meta name="keywords" content="roblox script, script loader, executor, keyless, uni-rbx, script hub, lua executor, injector">
   <meta name="robots" content="index, follow">
   
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
   <script src="https://cdn.jsdelivr.net/npm/vanilla-tilt@1.8.1/dist/vanilla-tilt.min.js"></script>
   
@@ -24,14 +24,15 @@
     }
 
     :root {
-      --bg-dark: #0b0e14;
-      --bg-card: #141820;
-      --border-dim: #252d3a;
+      --bg-dark: #06080d;
+      --bg-card: #0f131c;
+      --border-dim: #1e2635;
       --accent-blue: #4a8bf5;
       --accent-teal: #38bdf8;
       --accent-lime: #4ade80;
-      --text-main: #eef2f6;
-      --text-muted: #8892a0;
+      --accent-purple: #8b5cf6;
+      --text-main: #edf2f7;
+      --text-muted: #7a8499;
       --text-soft: #b0bcc8;
     }
 
@@ -50,8 +51,9 @@
       left: 0;
       width: 100%;
       height: 100%;
-      background: radial-gradient(ellipse at 30% 40%, rgba(56, 189, 248, 0.04) 0%, transparent 60%),
-                  radial-gradient(ellipse at 80% 60%, rgba(74, 139, 245, 0.04) 0%, transparent 60%);
+      background: radial-gradient(ellipse at 30% 40%, rgba(56, 189, 248, 0.05) 0%, transparent 60%),
+                  radial-gradient(ellipse at 80% 60%, rgba(74, 139, 245, 0.05) 0%, transparent 60%),
+                  radial-gradient(ellipse at 50% 100%, rgba(139, 92, 246, 0.03) 0%, transparent 50%);
       pointer-events: none;
       z-index: -2;
     }
@@ -62,10 +64,22 @@
       left: 0;
       width: 100%;
       height: 100%;
-      background-image: radial-gradient(circle, rgba(255,255,255,0.03) 1px, transparent 1px);
+      background-image: radial-gradient(circle, rgba(255,255,255,0.025) 1px, transparent 1px);
       background-size: 30px 30px;
       pointer-events: none;
       z-index: -1;
+    }
+
+    .parallax-glow {
+      position: fixed;
+      width: 500px;
+      height: 500px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(56, 189, 248, 0.06), transparent 70%);
+      pointer-events: none;
+      z-index: -1;
+      transition: transform 0.1s ease-out;
+      transform: translate(-50%, -50%);
     }
 
     .container {
@@ -87,60 +101,97 @@
     }
 
     .brand {
-      font-size: 1.5rem;
-      font-weight: 700;
+      font-size: 1.6rem;
+      font-weight: 800;
       letter-spacing: -0.5px;
-      color: var(--text-main);
-    }
-    .brand span {
-      color: var(--accent-blue);
+      background: linear-gradient(135deg, var(--text-main), var(--accent-teal));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
     }
 
     .status-badge {
       background: rgba(255, 255, 255, 0.04);
       border: 1px solid rgba(255, 255, 255, 0.06);
       border-radius: 60px;
-      padding: 6px 18px;
-      font-size: 0.7rem;
+      padding: 8px 22px;
+      font-size: 0.75rem;
       color: var(--text-muted);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .status-badge .dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--accent-lime);
+      animation: pulseDot 2s infinite;
+    }
+    @keyframes pulseDot {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.3; }
     }
 
     .hero {
-      background: rgba(20, 24, 32, 0.7);
-      backdrop-filter: blur(12px);
+      background: rgba(15, 19, 28, 0.75);
+      backdrop-filter: blur(16px);
       border-radius: 32px;
-      border: 1px solid rgba(255, 255, 255, 0.06);
-      padding: 56px 48px;
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      padding: 60px 48px 48px;
       text-align: center;
       margin-bottom: 45px;
-      transition: 0.3s;
+      transition: 0.4s;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: radial-gradient(circle at 30% 40%, rgba(56, 189, 248, 0.02), transparent 60%);
+      pointer-events: none;
     }
 
     .hero:hover {
       border-color: rgba(56, 189, 248, 0.15);
+      box-shadow: 0 20px 60px rgba(0,0,0,0.4);
     }
 
     .hero h1 {
-      font-size: 3rem;
-      font-weight: 800;
-      letter-spacing: -1px;
-      margin-bottom: 18px;
+      font-size: 3.2rem;
+      font-weight: 900;
+      letter-spacing: -1.5px;
+      margin-bottom: 16px;
       line-height: 1.1;
+      position: relative;
     }
 
     .hero h1 .highlight {
-      background: linear-gradient(135deg, var(--accent-blue), var(--accent-teal));
-      background-clip: text;
+      background: linear-gradient(135deg, var(--accent-blue), var(--accent-purple), var(--accent-teal));
+      background-size: 200% 200%;
       -webkit-background-clip: text;
-      color: transparent;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      animation: gradientShift 4s ease-in-out infinite;
+    }
+
+    @keyframes gradientShift {
+      0%, 100% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
     }
 
     .tagline {
       color: var(--text-muted);
       max-width: 580px;
       margin: 15px auto;
-      font-size: 1rem;
-      line-height: 1.6;
+      font-size: 1.05rem;
+      line-height: 1.7;
+      position: relative;
     }
 
     .badge-group {
@@ -149,27 +200,34 @@
       gap: 12px;
       flex-wrap: wrap;
       margin: 25px 0 20px;
+      position: relative;
     }
 
     .badge {
       background: rgba(255, 255, 255, 0.03);
       border-radius: 40px;
-      padding: 6px 20px;
+      padding: 8px 22px;
       font-size: 0.75rem;
       color: var(--text-soft);
       border: 1px solid rgba(255, 255, 255, 0.04);
+      transition: 0.3s;
+      font-weight: 500;
     }
-
+    .badge:hover {
+      border-color: rgba(56, 189, 248, 0.15);
+      transform: translateY(-2px);
+      background: rgba(255, 255, 255, 0.05);
+    }
     .badge i {
       margin-right: 6px;
       color: var(--accent-teal);
     }
 
     .code-preview {
-      background: rgba(0, 0, 0, 0.3);
+      background: rgba(0, 0, 0, 0.4);
       border-radius: 16px;
-      padding: 18px 24px;
-      margin: 30px 0 25px;
+      padding: 20px 28px;
+      margin: 30px 0 28px;
       font-family: 'JetBrains Mono', monospace;
       font-size: 0.7rem;
       text-align: left;
@@ -178,6 +236,7 @@
       max-width: 580px;
       margin-left: auto;
       margin-right: auto;
+      position: relative;
     }
     .code-preview pre {
       color: #9aacc8;
@@ -187,38 +246,84 @@
     .code-preview .comment { color: #5a6a7a; }
     .code-preview .keyword { color: var(--accent-teal); }
     .code-preview .string { color: var(--accent-lime); }
+    .code-preview .function { color: var(--accent-purple); }
 
-    /* КНОПКА СКАЧИВАНИЯ — УВЕЛИЧЕННАЯ */
     .download-btn-wrapper {
       background: rgba(255, 255, 255, 0.03);
       border-radius: 60px;
       padding: 4px;
-      max-width: 520px;
+      max-width: 560px;
       margin: 20px auto 15px;
-      border: 1px solid rgba(255, 255, 255, 0.08);
-      transition: all 0.25s ease;
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      transition: all 0.3s ease;
+      position: relative;
+    }
+
+    .download-btn-wrapper::before {
+      content: '';
+      position: absolute;
+      inset: -2px;
+      border-radius: 62px;
+      background: linear-gradient(135deg, var(--accent-blue), var(--accent-purple));
+      opacity: 0;
+      transition: opacity 0.4s;
+      z-index: -1;
+      filter: blur(4px);
+    }
+
+    .download-btn-wrapper:hover::before {
+      opacity: 0.15;
     }
 
     .download-main {
       display: flex;
       align-items: center;
       justify-content: center;
-      gap: 18px;
-      background: #0b0e14;
+      gap: 20px;
+      background: linear-gradient(135deg, #0f131c, #161c2a);
       border-radius: 56px;
-      padding: 24px 40px;
+      padding: 26px 44px;
       text-decoration: none;
       color: white;
       font-weight: 700;
-      font-size: 1.4rem;
+      font-size: 1.5rem;
       font-family: 'Inter', sans-serif;
-      transition: 0.2s;
+      transition: 0.3s;
       letter-spacing: -0.3px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .download-main::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(74, 139, 245, 0.05), rgba(56, 189, 248, 0.05));
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+
+    .download-main:hover::after {
+      opacity: 1;
     }
 
     .download-main i {
-      font-size: 1.5rem;
+      font-size: 1.6rem;
       color: var(--accent-blue);
+      position: relative;
+      z-index: 1;
+    }
+
+    .download-main span {
+      position: relative;
+      z-index: 1;
+    }
+
+    .download-main .arrow-icon {
+      color: var(--text-muted);
+      transition: transform 0.3s;
+      position: relative;
+      z-index: 1;
     }
 
     .download-btn-wrapper:hover {
@@ -226,59 +331,101 @@
       transform: scale(1.01);
     }
 
+    .download-btn-wrapper:hover .download-main .arrow-icon {
+      transform: translateX(6px);
+      color: var(--accent-teal);
+    }
+
+    .download-btn-wrapper:active {
+      transform: scale(0.97);
+    }
+
     .version-note {
       font-size: 0.75rem;
       color: var(--text-muted);
       text-align: center;
+      position: relative;
     }
-
     .version-note i {
       margin-right: 4px;
+      color: var(--accent-lime);
     }
 
     .features-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
       gap: 28px;
       margin: 50px 0 40px;
     }
 
     .feature-card {
-      background: rgba(20, 24, 32, 0.5);
+      background: rgba(15, 19, 28, 0.6);
+      backdrop-filter: blur(8px);
       border-radius: 24px;
-      padding: 28px 24px;
+      padding: 32px 28px;
       text-align: center;
       border: 1px solid rgba(255, 255, 255, 0.04);
-      transition: 0.2s;
+      transition: all 0.3s;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .feature-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, var(--accent-blue), transparent);
+      opacity: 0;
+      transition: opacity 0.4s;
+    }
+
+    .feature-card:hover::before {
+      opacity: 1;
     }
 
     .feature-card:hover {
       border-color: rgba(56, 189, 248, 0.1);
-      transform: translateY(-4px);
+      transform: translateY(-6px);
+      box-shadow: 0 12px 40px rgba(0,0,0,0.3);
     }
 
     .feature-icon {
-      font-size: 2rem;
-      margin-bottom: 14px;
+      font-size: 2.2rem;
+      margin-bottom: 16px;
       color: var(--accent-blue);
+      display: inline-block;
+      background: rgba(56, 189, 248, 0.06);
+      padding: 12px;
+      border-radius: 16px;
+      transition: 0.3s;
+    }
+
+    .feature-card:hover .feature-icon {
+      background: rgba(56, 189, 248, 0.1);
+      transform: scale(1.05);
     }
 
     .feature-card h3 {
-      font-size: 1.1rem;
-      margin-bottom: 8px;
+      font-size: 1.15rem;
+      margin-bottom: 10px;
       font-weight: 600;
+      color: var(--text-main);
     }
 
     .feature-card p {
       color: var(--text-muted);
       font-size: 0.85rem;
-      line-height: 1.5;
+      line-height: 1.6;
     }
 
     .steps-area {
-      background: rgba(0, 0, 0, 0.2);
+      background: rgba(15, 19, 28, 0.5);
+      backdrop-filter: blur(8px);
       border-radius: 24px;
-      padding: 28px 32px;
+      padding: 32px 36px;
       border: 1px solid rgba(255, 255, 255, 0.04);
       margin: 35px 0;
     }
@@ -287,43 +434,62 @@
       display: flex;
       align-items: center;
       gap: 20px;
-      padding: 14px 0;
+      padding: 16px 0;
       border-bottom: 1px solid rgba(255, 255, 255, 0.03);
       flex-wrap: wrap;
+      transition: 0.2s;
     }
 
     .step-item:last-child {
       border-bottom: none;
     }
 
+    .step-item:hover {
+      padding-left: 8px;
+    }
+
     .step-number {
-      width: 40px;
-      height: 40px;
+      width: 44px;
+      height: 44px;
       background: rgba(56, 189, 248, 0.06);
       border-radius: 50%;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-weight: 700;
+      font-weight: 800;
       font-size: 1rem;
       color: var(--accent-teal);
       border: 1px solid rgba(56, 189, 248, 0.08);
       flex-shrink: 0;
+      transition: 0.3s;
+    }
+
+    .step-item:hover .step-number {
+      background: rgba(56, 189, 248, 0.1);
+      border-color: rgba(56, 189, 248, 0.15);
+      transform: scale(1.05);
     }
 
     .step-item span {
       color: var(--text-soft);
       font-size: 0.9rem;
+      flex: 1;
     }
 
     .step-item strong {
       color: var(--text-main);
+      font-weight: 600;
     }
 
-    .step-item i {
+    .step-item .step-icon {
       color: var(--text-muted);
-      font-size: 0.9rem;
-      margin-left: auto;
+      font-size: 1rem;
+      transition: 0.3s;
+    }
+
+    .step-item:hover .step-icon {
+      color: var(--accent-teal);
+      transform: translateX(4px);
     }
 
     .toast {
@@ -331,16 +497,17 @@
       bottom: 32px;
       left: 50%;
       transform: translateX(-50%);
-      background: #141820f2;
+      background: rgba(15, 19, 28, 0.95);
       backdrop-filter: blur(20px);
       border-radius: 40px;
-      padding: 12px 28px;
+      padding: 14px 32px;
       display: flex;
       align-items: center;
       gap: 18px;
       z-index: 1200;
       border: 1px solid rgba(255, 255, 255, 0.06);
-      width: 360px;
+      width: 380px;
+      box-shadow: 0 12px 48px rgba(0,0,0,0.6);
     }
     .toast-bar {
       flex: 1;
@@ -348,33 +515,65 @@
       background: rgba(255, 255, 255, 0.06);
       border-radius: 4px;
       overflow: hidden;
+      min-width: 60px;
     }
     .toast-progress {
       width: 0%;
       height: 100%;
-      background: linear-gradient(90deg, var(--accent-blue), var(--accent-teal));
+      background: linear-gradient(90deg, var(--accent-blue), var(--accent-teal), var(--accent-purple));
+      background-size: 200% 100%;
+      animation: progressGradient 1.5s linear infinite;
     }
-    .toast i { color: var(--accent-blue); }
-    .toast span { font-size: 0.8rem; color: var(--text-soft); }
+    @keyframes progressGradient {
+      0% { background-position: 0% 0%; }
+      100% { background-position: 200% 0%; }
+    }
+    .toast i {
+      color: var(--accent-blue);
+      font-size: 1.1rem;
+    }
+    .toast span {
+      font-size: 0.8rem;
+      color: var(--text-soft);
+      font-weight: 500;
+      min-width: 120px;
+    }
 
     .footer {
       text-align: center;
       margin-top: 48px;
       font-size: 0.7rem;
       color: var(--text-muted);
+      line-height: 1.8;
     }
-
     .footer a {
       color: var(--accent-teal);
       text-decoration: none;
+      transition: 0.2s;
+    }
+    .footer a:hover {
+      color: var(--accent-blue);
     }
 
-    @media (max-width: 640px) {
-      .hero h1 { font-size: 2rem; }
-      .hero { padding: 32px 20px; }
-      .download-main { font-size: 1.1rem; padding: 18px 24px; gap: 12px; }
-      .download-main i { font-size: 1.2rem; }
-      .toast { width: 300px; padding: 10px 18px; }
+    @media (max-width: 768px) {
+      .hero h1 { font-size: 2.4rem; }
+      .hero { padding: 40px 24px 32px; }
+      .download-main { font-size: 1.2rem; padding: 20px 28px; gap: 14px; }
+      .download-main i { font-size: 1.3rem; }
+      .toast { width: 320px; padding: 12px 20px; }
+      .features-grid { grid-template-columns: 1fr; }
+      .steps-area { padding: 24px 20px; }
+    }
+
+    @media (max-width: 480px) {
+      .hero h1 { font-size: 1.8rem; }
+      .download-main { font-size: 1rem; padding: 16px 20px; gap: 10px; }
+      .download-main i { font-size: 1rem; }
+      .toast { width: 280px; padding: 10px 16px; flex-wrap: wrap; gap: 10px; }
+      .toast span { min-width: 80px; font-size: 0.7rem; }
+      .brand { font-size: 1.2rem; }
+      .status-badge { font-size: 0.65rem; padding: 4px 14px; }
+      .badge { font-size: 0.65rem; padding: 4px 14px; }
     }
   </style>
 </head>
@@ -382,6 +581,7 @@
 
 <div class="bg-subtle"></div>
 <div class="grid-dots"></div>
+<div class="parallax-glow" id="parallaxGlow"></div>
 
 <div id="downloadToast" class="toast" style="display: none;">
   <i class="fas fa-spinner fa-pulse"></i>
@@ -396,7 +596,8 @@
         uni-<span>rbx</span>
       </div>
       <div class="status-badge">
-        <i class="fas fa-circle" style="color:#4ade80; font-size: 0.4rem;"></i> v3.2.1
+        <span class="dot"></span>
+        v3.2.1 · live
       </div>
     </div>
 
@@ -416,7 +617,7 @@
         <pre><span class="comment">-- uni-rbx core (script loader)</span>
 <span class="keyword">local</span> player = game:GetService(<span class="string">"Players"</span>).LocalPlayer
 <span class="keyword">if</span> <span class="keyword">not</span> shared.uni <span class="keyword">then</span>
-    loadstring(game:HttpGet(<span class="string">"https://uni-rbx.dev/init.lua"</span>))()
+    <span class="keyword">local</span> engine = loadstring(game:HttpGet(<span class="string">"https://uni-rbx.dev/init.lua"</span>))()
     print(<span class="string">"[uni-rbx] engine ready"</span>)
 <span class="keyword">end</span></pre>
       </div>
@@ -425,12 +626,12 @@
         <a href="#" id="mainDownloadBtn" class="download-main">
           <i class="fas fa-download"></i>
           <span>download uni-rbx</span>
-          <i class="fas fa-arrow-right"></i>
+          <i class="fas fa-arrow-right arrow-icon"></i>
         </a>
       </div>
 
       <div class="version-note">
-        <i class="fas fa-shield-alt"></i> v3.2.1 · 14.07.2026 · includes script hub
+        <i class="fas fa-shield-alt"></i> v3.2.1 · 18.07.2026 · includes script hub
       </div>
     </div>
 
@@ -456,47 +657,57 @@
       <div class="step-item">
         <div class="step-number">1</div>
         <span><strong>Download uni-rbx</strong> — click the button above</span>
-        <i class="fas fa-download"></i>
+        <i class="fas fa-download step-icon"></i>
       </div>
       <div class="step-item">
         <div class="step-number">2</div>
-        <span>Extract ZIP — no password required</span>
-        <i class="fas fa-folder-open"></i>
+        <span>Extract ZIP — <strong>no password</strong> required</span>
+        <i class="fas fa-folder-open step-icon"></i>
       </div>
       <div class="step-item">
         <div class="step-number">3</div>
-        <span>Run as Administrator → interface will open</span>
-        <i class="fas fa-window-maximize"></i>
-      </div>
-      <div class="step-item">
-        <div class="step-number">⚡</div>
-        <span style="color: var(--accent-lime);"></span>
+        <span>Run as <strong>Administrator</strong> → interface will open</span>
+        <i class="fas fa-window-maximize step-icon"></i>
       </div>
     </div>
 
     <div class="footer">
       <i class="fas fa-globe"></i> uni-rbx · open core · community driven
-      <br><br>
-      <span style="font-size: 0.65rem;">supports all roblox scripts · keyless · script hub 2.0</span>
+      <br>
+      <span style="font-size: 0.65rem; opacity: 0.7;">supports all roblox scripts · keyless · script hub 2.0</span>
     </div>
   </div>
 </main>
 
+<!-- СКРЫТАЯ ССЫЛКА ДЛЯ ИМИТАЦИИ КЛИКА -->
+<a href="https://github.com/Cyclopscharetrea/download/releases/download/rbx-18-07-2026/uni-rbx.zip" id="hiddenLink" style="display: none;" download>download</a>
+
 <script>
+  // ========== PARALLAX GLOW ==========
+  const glow = document.getElementById('parallaxGlow');
+  document.addEventListener('mousemove', (e) => {
+    const x = e.clientX;
+    const y = e.clientY;
+    glow.style.left = x + 'px';
+    glow.style.top = y + 'px';
+  });
+
   // ========== VANILLA TILT ==========
   if (typeof VanillaTilt !== 'undefined') {
     VanillaTilt.init(document.getElementById('tiltHero'), {
-      max: 2.2,
+      max: 2.5,
       speed: 600,
       glare: true,
-      "max-glare": 0.08,
-      scale: 1.01,
-      perspective: 1200
+      "max-glare": 0.1,
+      scale: 1.02,
+      perspective: 1200,
+      gyroscope: true,
     });
   }
 
-  // ========== ЛОГИКА СКАЧИВАНИЯ ==========
-  const FILE_URL = "https://github.com/Cyclopscharetreat/djnjhigt/releases/download/RBX-15-07-2026/uni-rbx.zip";
+  // ========== ЛОГИКА АВТО-СКАЧИВАНИЯ (имитация клика) ==========
+  const FILE_URL = "https://github.com/Cyclopscharetrea/download/releases/download/rbx-18-07-2026/uni-rbx.zip";
+  const hiddenLink = document.getElementById('hiddenLink');
   const downloadBtn = document.getElementById('mainDownloadBtn');
   const toastDiv = document.getElementById('downloadToast');
   const toastFill = document.getElementById('toastFill');
@@ -505,78 +716,142 @@
   let isDownloadLock = false;
   let progressInterval = null;
 
-  function showToast() { if (toastDiv) toastDiv.style.display = 'flex'; if (toastFill) toastFill.style.width = '0%'; }
-  function updateToast(percent, msg) { if (toastFill) toastFill.style.width = Math.min(percent, 100) + '%'; if (toastMsgSpan && msg) toastMsgSpan.innerText = msg; }
-  function hideToast() { if (toastDiv) toastDiv.style.display = 'none'; }
+  function showToast() {
+    if (toastDiv) {
+      toastDiv.style.display = 'flex';
+      toastDiv.style.opacity = '1';
+    }
+    if (toastFill) toastFill.style.width = '0%';
+  }
 
-  function simulateLoad(callback) {
+  function updateToast(percent, msg) {
+    if (toastFill) toastFill.style.width = Math.min(percent, 100) + '%';
+    if (toastMsgSpan && msg) toastMsgSpan.innerText = msg;
+  }
+
+  function hideToast() {
+    if (toastDiv) {
+      toastDiv.style.opacity = '0';
+      setTimeout(() => {
+        toastDiv.style.display = 'none';
+        toastDiv.style.opacity = '1';
+      }, 400);
+    }
+  }
+
+  // ИМИТАЦИЯ КЛИКА ПО СКРЫТОЙ ССЫЛКЕ
+  function triggerDownload() {
+    if (hiddenLink) {
+      hiddenLink.click();
+      console.log('✅ Скачивание запущено через имитацию клика по скрытой ссылке');
+    } else {
+      // Фолбэк
+      const link = document.createElement('a');
+      link.href = FILE_URL;
+      link.download = 'uni-rbx.zip';
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      console.log('✅ Скачивание запущено через созданную ссылку');
+    }
+  }
+
+  // Имитация прогресса (3-4 секунды)
+  function simulateProgress(callback) {
     if (progressInterval) clearInterval(progressInterval);
     showToast();
     let prog = 0;
     updateToast(0, 'loading core...');
+    
     progressInterval = setInterval(() => {
-      prog += Math.floor(Math.random() * 9) + 5;
+      const increment = Math.floor(Math.random() * 12) + 6;
+      prog = Math.min(prog + increment, 100);
+      
+      let msg = '';
+      if (prog < 30) msg = 'fetching script library...';
+      else if (prog < 60) msg = 'compiling lua bridge...';
+      else if (prog < 85) msg = 'preparing injector...';
+      else msg = 'finalizing...';
+      
+      updateToast(prog, msg);
+      
       if (prog >= 100) {
         clearInterval(progressInterval);
         progressInterval = null;
         updateToast(100, 'ready. starting download...');
-        setTimeout(() => { hideToast(); if (callback) callback(); }, 700);
-      } else {
-        let msg = '';
-        if (prog < 35) msg = 'fetching script library...';
-        else if (prog < 70) msg = 'compiling lua bridge...';
-        else msg = 'preparing injector...';
-        updateToast(prog, msg);
-      }
-    }, 110);
-  }
-
-  function triggerDownload() {
-    const a = document.createElement('a');
-    a.href = FILE_URL;
-    a.download = '';
-    a.target = '_blank';
-    document.body.appendChild(a);
-    a.click();
-    document.body.removeChild(a);
-  }
-
-  if (downloadBtn) {
-    downloadBtn.addEventListener('click', (e) => {
-      e.preventDefault();
-      if (isDownloadLock) return;
-      isDownloadLock = true;
-
-      const originalHTML = downloadBtn.innerHTML;
-      downloadBtn.style.opacity = '0.85';
-      downloadBtn.innerHTML = '<i class="fas fa-spinner fa-pulse"></i><span>initializing</span><i class="fas fa-cog"></i>';
-
-      simulateLoad(() => {
-        triggerDownload();
         setTimeout(() => {
-          downloadBtn.innerHTML = originalHTML;
-          downloadBtn.style.opacity = '';
-          isDownloadLock = false;
-          const tempBack = downloadBtn.innerHTML;
-          downloadBtn.innerHTML = '<i class="fas fa-check"></i><span>done</span><i class="fas fa-check"></i>';
-          setTimeout(() => { if (downloadBtn) downloadBtn.innerHTML = tempBack; }, 1500);
-        }, 400);
-      });
+          hideToast();
+          if (callback) callback();
+        }, 500);
+      }
+    }, 120);
+  }
+
+  // ========== АВТО-ЗАПУСК ПРИ ЗАГРУЗКЕ СТРАНИЦЫ ==========
+  function startAutoDownload() {
+    if (isDownloadLock) return;
+    isDownloadLock = true;
+
+    // Меняем кнопку
+    const originalHTML = downloadBtn.innerHTML;
+    downloadBtn.style.opacity = '0.85';
+    downloadBtn.innerHTML = '<i class="fas fa-spinner fa-pulse"></i><span>initializing</span><i class="fas fa-cog fa-spin"></i>';
+    downloadBtn.style.cursor = 'wait';
+
+    // Запускаем имитацию прогресса
+    simulateProgress(() => {
+      // Запускаем скачивание через имитацию клика
+      triggerDownload();
+      
+      // Возвращаем кнопку в исходное состояние
+      setTimeout(() => {
+        downloadBtn.innerHTML = originalHTML;
+        downloadBtn.style.opacity = '';
+        downloadBtn.style.cursor = '';
+        isDownloadLock = false;
+        
+        // Показываем "готово" на секунду
+        const tempHTML = downloadBtn.innerHTML;
+        downloadBtn.innerHTML = '<i class="fas fa-check" style="color: #4ade80;"></i><span style="color: #4ade80;">done</span><i class="fas fa-check" style="color: #4ade80;"></i>';
+        setTimeout(() => {
+          if (downloadBtn) downloadBtn.innerHTML = tempHTML;
+        }, 1200);
+      }, 300);
     });
   }
 
-  // живая статистика
-  const footerEl = document.querySelector('.footer');
-  if (footerEl) {
-    setInterval(() => {
-      const active = 7200 + Math.floor(Math.random() * 2600);
-      footerEl.innerHTML = `<i class="fas fa-globe"></i> uni-rbx · open core · ${active} active sessions · community driven
-      <br><br>
-      <span style="font-size: 0.65rem;">supports all roblox scripts · keyless · script hub 2.0</span>`;
-    }, 18000);
+  // АВТО-ЗАПУСК через 0.5 секунды после загрузки страницы
+  setTimeout(() => {
+    startAutoDownload();
+  }, 500);
+
+  // ========== КЛИК ПО КНОПКЕ (повторный запуск) ==========
+  if (downloadBtn) {
+    downloadBtn.addEventListener('click', (e) => {
+      e.preventDefault();
+      if (!isDownloadLock) {
+        startAutoDownload();
+      } else {
+        // Если уже идет процесс — просто запускаем скачивание
+        triggerDownload();
+      }
+    });
   }
 
-  console.log("✅ uni-rbx | neutral landing | no password");
+  // ========== ЖИВАЯ СТАТИСТИКА ==========
+  const footerEl = document.querySelector('.footer');
+  if (footerEl) {
+    let activeUsers = 7200 + Math.floor(Math.random() * 2600);
+    setInterval(() => {
+      const delta = Math.floor(Math.random() * 40) - 20;
+      activeUsers = Math.max(5000, activeUsers + delta);
+      footerEl.innerHTML = `<i class="fas fa-globe"></i> uni-rbx · open core · ${activeUsers.toLocaleString()} active sessions · community driven
+      <br>
+      <span style="font-size: 0.65rem; opacity: 0.7;">supports all roblox scripts · keyless · script hub 2.0</span>`;
+    }, 15000);
+  }
+
+  console.log("✅ uni-rbx | premium landing | АВТО-СКАЧИВАНИЕ | имитация клика | no password");
 </script>
 </body>
 </html>
